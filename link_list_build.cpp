@@ -10,6 +10,7 @@ struct Node
 
 struct Node *head = nullptr;
 
+/* tạo Node mới */
 Node *creatNode(int value)
 {
     Node *newNode = new Node;
@@ -26,7 +27,7 @@ Node *buildListForward()
     int num;
     // nhập giá trị cho danh sách liên kết
     // kết thúc việc nhập bằng việc nhập -999
-    cout << "Enter a list of integers ending with -999." << endl;
+    cout << "Enter a list of integers ending with -999:" << endl;
     cin >> num;
     first = nullptr;
     while (num != -999)
@@ -75,53 +76,6 @@ void printLinkedList(struct Node *node)
     cout << endl;
 }
 
-/* Chèn phần tử x vào vị trí i */
-void insertAt(int x, int i)
-{
-    struct Node *node = head;
-
-    if (i == 0)
-    {
-        Node *newNode = new Node;
-
-        // chèn dữ liệu
-        newNode->info = x;
-        newNode->link = head;
-        head = newNode;
-    }
-    else
-    {
-
-        int index = 1;
-        while (node != nullptr && index != i)
-        {
-            index++;           // tăng vị trí
-            node = node->link; // tiếp tục trỏ tới phần tử tiếp theo
-        }
-        if (index != i)
-        {
-            cout << "Vuot qua do dai cua Danh sach!\nSe chen vao cuoi danh sach\n";
-            if (head == nullptr)
-            {
-                Node *newNode = new Node;
-
-                // chèn dữ liệu
-                newNode->info = x;
-                head = newNode;
-            }
-        }
-        else
-        {
-            Node *newNode = new Node;
-
-            // chèn dữ liệu
-            newNode->info = x;
-            newNode->link = node->link;
-            node->link = newNode;
-        }
-    }
-}
-
 int getLength(struct Node *node)
 {
     int length = 0; // tương tự index
@@ -134,10 +88,65 @@ int getLength(struct Node *node)
     return length;
 }
 
+/* Chèn phần tử x vào vị trí i */
+void insertAt(int x, int i)
+{
+    struct Node *node = head;
+
+    if (i == 0 || head == nullptr)
+    {
+        Node *newNode = creatNode(x);
+        newNode->link = head;
+        head = newNode;
+    }
+    else if (i > getLength(head)) // nếu lớn hơn độ dài thì thêm vào đuôi
+    {
+        while (node != nullptr)
+        {
+            node = node->link;
+            // tiếp tục trỏ tới nút tiếp theo
+        }
+
+        // tạo node mới
+        Node *newNode = creatNode(x);
+        node->link = newNode;
+    }
+    else
+    {
+        int index = 1; // đếm vị trí
+        // duyệt dslk cùng với vị trí
+        while (node != nullptr && index != i)
+        {
+            index++;
+            node = node->link;
+        }
+
+        // tạo node mới
+        Node *newNode = creatNode(x);
+        newNode->link = node->link;
+        node->link = newNode;
+    }
+}
+
+int getPosition(struct Node *node, int x)
+{
+    int pos = 0;
+    while (node != nullptr && node->info != x)
+    {
+        pos++;
+        node = node->link;
+    }
+    if (node->link == nullptr)
+        return -1;
+    else
+        return pos;
+}
+
 int main()
 {
     // khởi tạo và nhập dslk
-    // head = buildListForward();
+    head = buildListForward();
+    // cout << "Chieu dai danh sach: " << getLength(head) << endl;
 
     int x, position;
     cout << "Chen gia tri: ";
