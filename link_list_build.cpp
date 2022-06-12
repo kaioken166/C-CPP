@@ -89,17 +89,16 @@ int getLength(struct Node *node)
 }
 
 /* Chèn phần tử x vào vị trí i */
-void insertAt(int x, int i)
+void insertAt(struct Node *node, int x, int i)
 {
-    struct Node *node = head;
+    Node *newNode = creatNode(x); // tạo node mới
 
-    if (i == 0 || head == nullptr)
+    if (i == 0 || node == nullptr)
     {
-        Node *newNode = creatNode(x);
-        newNode->link = head;
-        head = newNode;
+        newNode->link = node;
+        node = newNode;
     }
-    else if (i > getLength(head)) // nếu lớn hơn độ dài thì thêm vào đuôi
+    else if (i > getLength(node)) // nếu lớn hơn độ dài thì thêm vào đuôi
     {
         while (node != nullptr)
         {
@@ -108,7 +107,6 @@ void insertAt(int x, int i)
         }
 
         // tạo node mới
-        Node *newNode = creatNode(x);
         node->link = newNode;
     }
     else
@@ -122,7 +120,6 @@ void insertAt(int x, int i)
         }
 
         // tạo node mới
-        Node *newNode = creatNode(x);
         newNode->link = node->link;
         node->link = newNode;
     }
@@ -130,16 +127,26 @@ void insertAt(int x, int i)
 
 int getPosition(struct Node *node, int x)
 {
-    int pos = 0;
-    while (node != nullptr && node->info != x)
+    int position = 0;
+    for (Node *p = node; p != nullptr; p = p->link)
     {
-        pos++;
-        node = node->link;
+        if (p->info == x)
+        {
+            return position;
+        }
+        ++position;
     }
-    if (node->link == nullptr)
-        return -1;
-    else
-        return pos;
+    return -1;
+}
+
+double trungbinhcong(struct Node *node)
+{
+    int sum = 0;
+    for (Node *p = node; p != nullptr; p = p->link)
+    {
+        sum += p->info;
+    }
+    return (double)sum / getLength(node);
 }
 
 int main()
@@ -148,12 +155,19 @@ int main()
     head = buildListForward();
     // cout << "Chieu dai danh sach: " << getLength(head) << endl;
 
-    int x, position;
-    cout << "Chen gia tri: ";
-    cin >> x;
-    cout << "Vao vi tri: ";
-    cin >> position;
-    insertAt(x, position);
+    // int x, position;
+    // cout << "Chen gia tri: ";
+    // cin >> x;
+    // cout << "Vao vi tri: ";
+    // cin >> position;
+    // insertAt(x, position);
+
     printLinkedList(head);
+    cout << "Trung binh cong danh sach lien ket: " << trungbinhcong(head);
+
+    // int value;
+    // cout << "Tim vi tri cua gia tri: ";
+    // cin >> value;
+    // cout << "Khong tim thay = -1/ Tim thay: " << getPosition(head, value);
     return 0;
 }
