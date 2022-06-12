@@ -181,17 +181,17 @@ int main()
     inOrderTraversal(root);
     cout << endl
          << searchNode(root, 10) << endl;
-    // cout << nodeCount(root) << endl;
-    // cout << leavesCount(root) << endl;
-    // cout << singleParent(root) << endl;
+    cout << nodeCount(root) << endl;
+    cout << leavesCount(root) << endl;
+    cout << singleParent(root) << endl;
 
-    // cout << "\nSau khi xóa node 10\n";
-    // root = deleteNode(root, 10);
-    // cout << "Duyệt trung tự: ";
-    // inOrderTraversal(root);
-    // cout << endl
-    //      << searchNode(root, 10) << endl;
-    // cout << nodeCount(root) << endl;
-    // cout << leavesCount(root) << endl;
-    // cout << singleParent(root) << endl;
+    cout << "\nSau khi xóa node 10\n";
+    root = deleteNode(root, 10);
+    cout << "Duyệt trung tự: ";
+    inOrderTraversal(root);
+    cout << endl
+         << searchNode(root, 10) << endl;
+    cout << nodeCount(root) << endl;
+    cout << leavesCount(root) << endl;
+    cout << singleParent(root) << endl;
 }
