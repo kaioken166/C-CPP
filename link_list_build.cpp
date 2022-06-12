@@ -5,7 +5,7 @@ using namespace std;
 struct Node
 {
     int info;
-    struct Node *link;
+    Node *link;
 };
 
 struct Node *head = nullptr;
@@ -149,6 +149,21 @@ double trungbinhcong(struct Node *node)
     return (double)sum / getLength(node);
 }
 
+void swap(Node *a, Node *b)
+    {
+        int temp = a->info;
+        a->info = b->info;
+        b->info = temp;
+    }
+
+void sortLinkedListA(struct Node *node)
+{
+    for (Node *p = node; p != nullptr; p = p->link)
+        for (Node *q = p->link; q != nullptr; q = q->link)
+            if (p->info > q->info)
+                swap(p->info, q->info);
+}
+
 int main()
 {
     // khởi tạo và nhập dslk
@@ -162,12 +177,14 @@ int main()
     // cin >> position;
     // insertAt(x, position);
 
-    printLinkedList(head);
-    cout << "Trung binh cong danh sach lien ket: " << trungbinhcong(head);
+    // sortLinkedListA(head);
+
+    // cout << "Trung binh cong danh sach lien ket: " << trungbinhcong(head);
 
     // int value;
     // cout << "Tim vi tri cua gia tri: ";
     // cin >> value;
     // cout << "Khong tim thay = -1/ Tim thay: " << getPosition(head, value);
+    printLinkedList(head);
     return 0;
 }
